@@ -1,0 +1,20 @@
+{
+	ads:[
+			{
+				"title": "Grandma Bike",
+				"url": "http://...",
+				"price": 34.99,
+				"description": "Beautiful bike bla bla...",
+				"condition": "like new",
+				"location": "Stockholm"
+			},
+			{
+				"title": "Mountain Bike",
+				"url": "http://...",
+				"price": 99.99,
+				"description": "Fast bike, bla bla...",
+				"condition": "good",
+				"location": "Östersund"
+			}
+	]
+}
