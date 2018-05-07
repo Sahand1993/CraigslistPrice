@@ -14,7 +14,7 @@ while i+1 < length:
 	source = lines[i+1]
 	json_obj = json.loads(action)["index"]
 	json_obj["_source"] = json.loads(source)
-	f_out.write(json.dumps(json_obj, sort_keys=True, indent=4)+"\n")
+	f_out.write(json.dumps(json_obj)+"\n")
 	i += 2
 
 f_in.close()
