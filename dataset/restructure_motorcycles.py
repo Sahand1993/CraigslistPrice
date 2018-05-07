@@ -1,3 +1,5 @@
+## restructures motorcycle data on the initial form to a form that fits the Elasticsearch Python library.
+
 import json
 
 f_in = open("motorcycles.json", "r")
