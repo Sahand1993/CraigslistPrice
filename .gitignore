@@ -1,6 +1,5 @@
 bin/
 dataset/motorcycles.json
-dataset/motorcycles_python.json
 include/
 lib/
 pip-selfcheck.json

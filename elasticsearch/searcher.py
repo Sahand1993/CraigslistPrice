@@ -1,4 +1,5 @@
 import json
+from statistics import mean, median
 
 from elasticsearch import Elasticsearch
 from elasticsearch.helpers import bulk
@@ -6,10 +7,10 @@ from elasticsearch.exceptions import NotFoundError
 
 PATH_TO_DATASET = "../dataset/motorcycles_python.json"
 CUTOFF = 0.8 # Results with score less than 0.8 * max_score will not contribute to price estimate
-K = 15 # We take top K to provide price recommendation
-INDEX_NAME = "blocket"
+INDEX_NAME = "simple"
 TITLE_WEIGHT = 0.5
 DESCRIPTION_WEIGHT = 1 - TITLE_WEIGHT
+MAX_OBJECTS = 19000 # maximum number of similar objects returned by Searcher.similar()
 
 
 ## TODO: look at Stemming, stop words and weighting between 
@@ -17,7 +18,6 @@ DESCRIPTION_WEIGHT = 1 - TITLE_WEIGHT
 
 class Searcher(object):
 	def __init__(self):
-		print("hej")
 		self.es = Elasticsearch()
 
 		if self.es.indices.exists(INDEX_NAME):
@@ -30,83 +30,129 @@ class Searcher(object):
 		# is compared to description weight
 		self.title_weight = TITLE_WEIGHT/DESCRIPTION_WEIGHT
 
-	def search(self, query, min_model_year = None, max_model_year = None, city = ""):
-		"""
-			Takes search query and returns price recommendation.
-		"""
-		
+	def construct_query_body(self, q, **kwargs):
 		query = {"query": {
 					"bool":{
 						"must":{
 							"multi_match": {
 								"type": "cross_fields", # This means that we 
-								"query": query,
+								"query": q,
 								"fields": ["title^"+str(self.title_weight), "description"], # Weighting title field
 								"operator": "or" # Or is probably the default value
 							}
-						},
-						"filter":{
-							"term":{
-								"location":"uppsala"
-							}
-						},
-						"must_not":[
-							{"range": {
-								"modelYear":{"lte": min_model_year}
-							}},
-							{"range":{
-								"modelYear":{"gt": max_model_year}
-							}}
-						]
+						}
+						
 					}
 				}
 			}
-		if min_model_year:
-			query["query"]["bool"]["must_not"] = [
-											{
-												"range":{
-													"modelYear": {"lt": min_model_year}
-												}
-											}
-										]
-
-		if max_model_year:
-			query["query"]["bool"]["must_not"].append({
+		query_filters = []
+		if "min_model_year" in kwargs:
+			query_filters.append(\
+				{
 					"range":{
-						"modelYear": {"gt": max_model_year}
+						"modelYear": {
+							"gte": kwargs["min_model_year"]
+						}
 					}
-				})
-			
-		if city:
-			query["query"]["bool"]["filter"]["term"] = {"location":city.lower()}
+				}
+			) 
 
-		res = es.search(index = "simple", body = query, size = 1000, scroll = "2m")
+		if "max_model_year" in kwargs:
+			query_filters.append(\
+				{
+					"range":{
+						"modelYear": {
+							"lte": kwargs["max_model_year"]
+						}
+					}
+				}
+			) 
+		
+		if "location" in kwargs:
+			query_filters.append(\
+			{
+				"term": {
+					"location":kwargs["location"].lower()
+				}
+			})
+		
+		if "vehicle_type" in kwargs:
+			query_filters.append(\
+			{
+				"term": {
+					"vehicleType": kwargs["vehicle_type"].lower()
+				}
+			})
+				
+		query["query"]["bool"]["filter"] = query_filters
+
+		return query
+
+	def price(self, query, **kwargs):
+		similar = self.similar(query, **kwargs)
+		max_price_obj = max( similar, key = lambda obj: obj["_source"]["price"] ) # object with highest price
+		min_price_obj = min( similar, key = lambda obj: obj["_source"]["price"] ) # object with lowest price
+		avg = mean(map(lambda obj: obj["_source"]["price"], similar)) # average price
+		med = median( map( lambda obj: obj["_source"]["price"], similar ) ) # median price
+
+		result = {
+		"median_price" : med,
+		"average_price" : avg,
+		"max_price" : max_price_obj["_source"]["price"],
+		"min_price" : min_price_obj["_source"]["price"],
+		"max_price_object" : max_price_obj,
+		"min_price_object" : min_price_obj,
+		}
+		return result
+
+	def search(self, query, **kwargs):
+		"""
+		Takes search query parameters and returns results from index 
+		"""
+		query_body = self.construct_query_body(query, **kwargs)
+		
+		print("Searching with request body: \n{}".format( json.dumps(query_body, indent=4, sort_keys=True) ))
+
+		return self.es.search(index = INDEX_NAME, body = query_body, size = 10, scroll = "2m")
+	
+	def similar(self, query, **kwargs):
+		""" 
+		Returns all ads that are similar enough to the most similar ad
+		using CUTOFF.
+		"""
+		res = self.search(query, **kwargs)
+
 		total = res["hits"]["total"]
 		max_score = res["hits"]["max_score"]
 		hits = res["hits"]["hits"]
-		sid = res["_scroll_id"]
+		sid = res["_scroll_id"] # scroll_id. Used to get next "page" of results
 		
-		similar = None # all ads which are similar enough to query
+		print("{} results: ".format(total))
 
-		# Alternative 1:
-		# 1. Do tf-idf ranked search in the title.
-		# 2. Do tf-idf ranked search in the body.
-		# 3. Do a score union.
-		# 4. Pick first k that have the right model 
-		# year and take average, median, maximum 
-		# and minimum price out of these.
-		# 5. If you can't find k motorcycles for 
-		# that year, try the nearest years, and 
-		# continue from 4. until you have k motorcycles
+		similar = [] # all ads which are similar enough to query
+		while len(hits) > 0:
+			stop = self.similar_in_hits(similar, hits, max_score)
 
-		# Alternative 2:
-		# Put body and description together in one field.
-		# Do same as above
+			if stop:
+				break
 
-		# Alternative 3:
-		# train an MLP to take the factors into account and then
-		# return a price, based on
-		return None
+			res = self.es.scroll(scroll_id = sid, scroll = "2m")
+			hits = res["hits"]["hits"]
+			sid = res["_scroll_id"] # get next scroll_id
+
+		return similar
+
+	def similar_in_hits(self, similar, hits, max_score):
+		"""
+			Takes list of hits and returns list with those that have 
+			score/max_score >= CUTOFF
+		"""
+		for ad in hits:
+			score = ad["_score"]
+			if score/max_score < CUTOFF or len(similar) > MAX_OBJECTS:
+				return True
+			similar.append(ad)
+		return False
 
 	def create_index(self, file_path):
 		"""
@@ -140,7 +186,26 @@ class Searcher(object):
 		self.es.indices.create(index = INDEX_NAME, body = request_body)
 		f_in = open(PATH_TO_DATASET, "r")
 		actions = (json.loads(line) for line in f_in)
-		bulk(self.es, actions)
-		self.es.indices.refresh(index = INDEX_NAME)
+		print("Performed bulk index: {}".format(bulk(self.es, actions)))
+		self.es.indices.refresh(index = "simple")
 
+# Example usage
 searcher = Searcher()
+res = searcher.price("honda", location = "vänersborg", min_model_year=2000)
+print("""
+
+Average price: {}
+Median price: {}
+Max price: {}
+Min price: {}
+Most expensive object: {}
+Least expensive object: {}
+
+	""".format(\
+		res["average_price"],
+		res["median_price"],
+		res["max_price"],
+		res["min_price"],
+		json.dumps(res["max_price_object"], indent = 4),
+		json.dumps(res["min_price_object"], indent = 4)
+		))
