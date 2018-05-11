@@ -137,8 +137,6 @@ class Searcher(object):
         hits = res["hits"]["hits"]
         sid = res["_scroll_id"] # scroll_id. Used to get next "page" of results
         
-        print("{} results: ".format(total))
-
         similar = [] # all ads which are similar enough to query
         while len(hits) > 0:
             stop = self.similar_in_hits(similar, hits, max_score)
@@ -206,17 +204,18 @@ class Searcher(object):
         self.es.indices.refresh(index = "simple")
 
 # Example usage
+"""
 searcher = Searcher()
 res = searcher.price("honda", location = "vänersborg", min_model_year=2009, vehicle_type="sport")
 print("""
-
+"""
 Average price: {}
 Median price: {}
 Max price: {}
 Min price: {}
 Most expensive object: {}
 Least expensive object: {}
-
+"""
     """.format(\
         res["average_price"],
         res["median_price"],
@@ -225,3 +224,4 @@ Least expensive object: {}
         json.dumps(res["max_price_object"], indent = 4),
         json.dumps(res["min_price_object"], indent = 4)
         ))
+"""
