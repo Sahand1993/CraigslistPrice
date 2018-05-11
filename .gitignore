@@ -5,3 +5,5 @@ lib/
 pip-selfcheck.json
 .Python
 .idea
+elasticsearch/exploring.py
+elasticsearch/searching.py
