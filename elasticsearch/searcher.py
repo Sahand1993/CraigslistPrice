@@ -4,7 +4,7 @@ from statistics import mean, median
 from elasticsearch import Elasticsearch
 from elasticsearch.helpers import bulk
 
-PATH_TO_DATASET = "../dataset/motorcycles_python.json"
+PATH_TO_DATASET = "../dataset/mini.json"
 CUTOFF = 0.8    # Results with score less than 0.8 * max_score will not
                 # contribute to price estimate
 INDEX_NAME = "simple"
@@ -75,7 +75,7 @@ class Searcher(object):
             query_filters.append(\
             {
                 "term": {
-                    "location":kwargs["location"].lower()
+                    "location":kwargs["location"]
                 }
             }
             )
@@ -84,7 +84,7 @@ class Searcher(object):
             query_filters.append(\
             {
                 "term": {
-                    "vehicleType": kwargs["vehicle_type"].lower()
+                    "vehicleType": kwargs["vehicle_type"]
                 }
             }
             )
@@ -129,6 +129,13 @@ class Searcher(object):
         """ 
         Returns all ads that are similar enough to the most similar ad
         using CUTOFF.
+        Args:
+            query: query string
+        kwargs:
+            min_model_year: minimum model year
+            max_model_year: maximum model year
+            location: location
+            vehicle_type: vehicle type
         """
         res = self.search(query, **kwargs)
 
@@ -186,13 +193,15 @@ class Searcher(object):
     "motorcycle":{
         "properties":{
             "location": {
-                "type":"text",
-                "analyzer":"swedish"
+                "type":"keyword",
+            },
+            "vehicleType": {
+                "type": "keyword",
             },
             "description":{
                 "type":"text",
-                "analyzer":"swedish"
-            }
+                "analyzer":"swedish",
+            },
         }
     }
 }
@@ -203,25 +212,24 @@ class Searcher(object):
         print("Performed bulk index: {}".format(bulk(self.es, actions)))
         self.es.indices.refresh(index = "simple")
 
-# Example usage
-"""
-searcher = Searcher()
-res = searcher.price("honda", location = "vänersborg", min_model_year=2009, vehicle_type="sport")
-print("""
-"""
-Average price: {}
-Median price: {}
-Max price: {}
-Min price: {}
-Most expensive object: {}
-Least expensive object: {}
-"""
-    """.format(\
-        res["average_price"],
-        res["median_price"],
-        res["max_price"],
-        res["min_price"],
-        json.dumps(res["max_price_object"], indent = 4),
-        json.dumps(res["min_price_object"], indent = 4)
-        ))
-"""
+# # Example usage
+
+# searcher = Searcher()
+# res = searcher.price("honda", location = "vänersborg", min_model_year=2009, vehicle_type="sport")
+# print("""
+
+# Average price: {}
+# Median price: {}
+# Max price: {}
+# Min price: {}
+# Most expensive object: {}
+# Least expensive object: {}
+
+#     """.format(\
+#         res["average_price"],
+#         res["median_price"],
+#         res["max_price"],
+#         res["min_price"],
+#         json.dumps(res["max_price_object"], indent = 4),
+#         json.dumps(res["min_price_object"], indent = 4)
+#         ))
