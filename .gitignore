@@ -7,3 +7,4 @@ pip-selfcheck.json
 .idea
 elasticsearch/exploring.py
 elasticsearch/searching.py
+.pyc
