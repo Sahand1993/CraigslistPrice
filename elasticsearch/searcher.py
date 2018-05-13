@@ -100,6 +100,9 @@ class Searcher(object):
             @ query: 
         """
         similar = self.similar(query, **kwargs)
+        if not similar:
+            return None
+            
         max_price_obj = max( similar, key = lambda obj: obj["_source"]["price"] ) # object with highest price
         min_price_obj = min( similar, key = lambda obj: obj["_source"]["price"] ) # object with lowest price
         avg = mean(map(lambda obj: obj["_source"]["price"], similar)) # average price
