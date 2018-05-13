@@ -74,7 +74,7 @@ class Searcher(object):
         if "location" in kwargs:
             query_filters.append(\
             {
-                "term": {
+                "match": {
                     "location":kwargs["location"]
                 }
             }
@@ -193,7 +193,8 @@ class Searcher(object):
     "motorcycle":{
         "properties":{
             "location": {
-                "type":"keyword",
+                "type":"text",
+                "analyzer":"swedish"
             },
             "vehicleType": {
                 "type": "keyword",
