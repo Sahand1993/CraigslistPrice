@@ -5,10 +5,10 @@ from elasticsearch import Elasticsearch
 from elasticsearch.helpers import bulk
 
 PATH_TO_DATASET = "../dataset/motorcycles_python.json"
-CUTOFF = 0.8    # Results with score less than 0.8 * max_score will not
+CUTOFF = 0.6    # Results with score less than 0.8 * max_score will not
                 # contribute to price estimate
 INDEX_NAME = "simple"
-TITLE_WEIGHT = 0.9
+TITLE_WEIGHT = 0.7
 DESCRIPTION_WEIGHT = 1 - TITLE_WEIGHT
 # maximum number of similar objects returned by Searcher.similar()
 MAX_OBJECTS = 19000
