@@ -8,7 +8,7 @@ PATH_TO_DATASET = "../dataset/motorcycles_python.json"
 CUTOFF = 0.8    # Results with score less than 0.8 * max_score will not
                 # contribute to price estimate
 INDEX_NAME = "simple"
-TITLE_WEIGHT = 0.5
+TITLE_WEIGHT = 0.9
 DESCRIPTION_WEIGHT = 1 - TITLE_WEIGHT
 # maximum number of similar objects returned by Searcher.similar()
 MAX_OBJECTS = 19000
@@ -39,14 +39,21 @@ class Searcher(object):
         }
 
         if q:
-            query["query"]["bool"]["must"] = {
-            "multi_match": {
-                "type": "cross_fields",
-                "query": q,
-                "fields": ["title^"+str(self.title_weight), "description"], # Weighting title field
-                "operator": "or" # Or is probably the default value
-            }
-            }
+            query["query"]["bool"]["should"] = [
+                {
+                    "match": {
+                        "title": {
+                            "query": q,
+                            "boost": self.title_weight
+                        }
+                    }
+                },
+                {
+                    "match": {
+                        "description": q
+                    }
+                }
+            ]
 
         query_filters = []
         if "min_model_year" in kwargs:
@@ -215,6 +222,11 @@ class Searcher(object):
         actions = (json.loads(line) for line in f_in)
         print("Performed bulk index: {}".format(bulk(self.es, actions)))
         self.es.indices.refresh(index = "simple")
+
+if __name__ == "__main__":
+    searcher = Searcher()
+    res = searcher.price("honda")
+    print(res["max_price_object"])
 
 # # Example usage
 
