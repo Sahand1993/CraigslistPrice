@@ -1,6 +1,9 @@
 # CraigslistPrice
 A search engine for getting price statistics of objects sold on Blocket
 
+
+HOW TO USE:
+
 1. START ELASTIC SEARCH
 
 2. START THE USER INTERFACE:
