@@ -14,7 +14,7 @@ def makeform(root, fields):
 	for i, field in enumerate(fields):
 
 		row = Frame(root)
-		lab = Label(row, width=15, text=field, anchor='w')
+		lab = Label(row, width=15, text=field, anchor='center')
 		ent = Entry(row)
 		row.pack(side=TOP, fill=X, padx=5, pady=5)
 		lab.pack(side=LEFT)
@@ -23,7 +23,7 @@ def makeform(root, fields):
 		entries.append((field, ent))
 
 	row = Frame(root)
-	lab = Label(row, width=15, text="Motor cycle type", anchor='w')
+	lab = Label(row, width=15, text="Type", anchor='center')
 	variable1 = StringVar(root)
 	row.pack(side=TOP, fill=X, padx=5, pady=5)
 	lab.pack(side=TOP)
@@ -33,7 +33,7 @@ def makeform(root, fields):
 	entries.append(("Motor cycle type", variable1))
 
 	row = Frame(root)
-	lab = Label(row, width=15, text="Min model year", anchor='w')
+	lab = Label(row, width=15, text="Minimum model year", anchor='center')
 	variable2 = StringVar(root)
 	row.pack(side=TOP, fill=X, padx=5, pady=5)
 	lab.pack(side=TOP)
@@ -43,7 +43,7 @@ def makeform(root, fields):
 	entries.append(("Min model year", variable2))
 
 	row = Frame(root)
-	lab = Label(row, width=15, text="Min model year", anchor='w')
+	lab = Label(row, width=15, text="Maximum model year", anchor='center')
 	variable3 = StringVar(root)
 	row.pack(side=TOP, fill=X, padx=5, pady=5)
 	lab.pack(side=TOP)
