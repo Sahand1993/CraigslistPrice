@@ -1,0 +1,95 @@
+Query:yamaha
+ModelYear:all
+Location:all
+VehicleType:all
+SubsetIDs:100-199
+RelevantIDs:101,110,115,130,145,146,148,153,154,158,159,169,176,178,193,197
+SomewhatRelevantIDs:116,166
+
+Query:honda crf
+ModelYear:all
+Location:all
+VehicleType:all
+SubsetIDs:1013-1112
+RelevantIDs:1056,1060,1099
+SomewhatRelevantIDs:none
+
+Query:honda
+ModelYear:2007-2017
+Location:uppsala
+VehicleType:all
+SubsetIDs:295-394
+RelevantIDs:353
+SomewhatRelevantIDs:none
+
+Query:suzuki nyskick servad besiktad
+ModelYear:2005-2018
+Location:all
+VehicleType:all
+SubsetIDs:821-920
+RelevantIDs:858,872,891
+SomewhatRelevantIDs:none
+
+Query:ktm
+ModelYear:all
+Location:all
+VehicleType:Cross/enduro
+SubsetIDs:11990-12089
+RelevantIDs:12008,12016,12070,12073,12087,12089
+SomewhatRelevantIDs:none
+
+Query:bra hoj snabb affär
+ModelYear:all
+Location:all
+VehicleType:all
+SubsetIDs:1200-1299
+RelevantIDs:1244,1274,1296
+SomewhatRelevantIDs:none
+
+Query:motorcykel i perfekt skick
+ModelYear:all
+Location:all
+VehicleType:all
+SubsetIDs:187-286
+RelevantIDs:190,191,193,194,196,215,227,234,236,242,253,255,271
+SomewhatRelevantIDs:188,192,204,208,210,219,229,241,243,247,251,252,254,259,265,276,277,278,285
+
+Query:harley davidson med abs
+ModelYear:all
+Location:all
+VehicleType:all
+SubsetIDs:1547-1646
+RelevantIDs:1556,1630
+SomewhatRelevantIDs:none
+
+Query:servad och besiktad bmw
+ModelYear:all
+Location:all
+VehicleType:all
+SubsetIDs:524-623
+RelevantIDs:none
+SomewhatRelevantIDs:539,568,616,620
+
+Query:stötdämpare
+ModelYear:all
+Location:all
+VehicleType:Offroad
+SubsetIDs:17781-17880
+RelevantIDs:17802
+SomewhatRelevantIDs:none
+
+Query:suzuki honda yamaha
+ModelYear:1990-2016
+Location:all
+VehicleType:all
+SubsetIDs:322-421
+RelevantIDs:322,324,327,328,331,335,338,341,348,350,353,354,355,361,363,366,367,368,369,370,372,373,375,376,379,383,384,388,390,401,402,403,406,408,409,415,419,420,421
+SomewhatRelevantIDs:none
+
+Query:kraftfull motor
+ModelYear:all
+Location:all
+VehicleType:all
+SubsetIDs:4243-4342
+RelevantIDs:4271,4307
+SomewhatRelevantIDs:4334
