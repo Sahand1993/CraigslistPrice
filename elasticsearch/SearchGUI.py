@@ -74,13 +74,22 @@ def search(entries):
 		res = searcher.price(query=entries[0][1].get(), location=entries[1][1].get(), vehicle_type=entries[2][1].get(),  min_model_year=entries[3][1].get(), max_model_year=entries[4][1].get())
 		returned_docs = searcher.similar(query=entries[0][1].get(), location=entries[1][1].get(), vehicle_type=entries[2][1].get(),  min_model_year=entries[3][1].get(), max_model_year=entries[4][1].get())
 
-	res_frame = Tk()
-	res_frame.title('Result')
+	
 
 	if res == None:
-		w = Label(res_frame, text='No match for this query')
+		res_frame_ = Tk()
+		res_frame_.title('Sorry...')
+
+		w = Label(res_frame_, text='No match for this query.\nPlease try again with other specifications!')
 		w.pack(padx=20, pady=20)
+
+		b = Button(res_frame_, text='Quit', command=res_frame_.destroy)
+		b.pack(side=BOTTOM, padx=5, pady=5)
+		res_frame_.mainloop()
 	else:
+		res_frame = Tk()
+		res_frame.title('Results')
+
 		for entry in entries:
 			field = entry[0]
 			text = entry[1].get()
@@ -99,10 +108,11 @@ def search(entries):
 	        ))
 		w.pack(side=LEFT, padx=20, pady=20)
 
-	b = Button(res_frame, text='Quit', command=res_frame.destroy)
-	b.pack(side=BOTTOM, padx=5, pady=5)
+		b = Button(res_frame, text='Quit', command=res_frame.destroy)
+		b.pack(side=BOTTOM, padx=5, pady=5)
+		res_frame.mainloop()
 
-	res_frame.mainloop()
+	
 
 if __name__ == '__main__':
 
