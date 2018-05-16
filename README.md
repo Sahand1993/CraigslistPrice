@@ -17,6 +17,6 @@ City (optional field): Enter a location/city that you want to filter the search 
 
 Type: Select a specific motorcycle type or search amongst all types ("All")
 
-Minimum Model Year: Select how old motorcycles you want to include in the search result.
-
 Maximum Model Year: Select how new motorcycles you want to include in the search result.
+
+Minimum Model Year: Select how old motorcycles you want to include in the search result.
