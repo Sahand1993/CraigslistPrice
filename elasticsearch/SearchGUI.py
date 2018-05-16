@@ -3,7 +3,7 @@ from searcher import *
 import PIL
 from PIL import ImageTk, Image
 
-default_values = ('Honda', 'All')
+default_values = ('', '')
 fields = 'Query', 'City'
 
 def makeform(root, fields):
@@ -33,24 +33,24 @@ def makeform(root, fields):
 	entries.append(("Motor cycle type", variable1))
 
 	row = Frame(root)
-	lab = Label(row, width=15, text="Minimum model year", anchor='center')
-	variable2 = StringVar(root)
-	row.pack(side=TOP, fill=X, padx=5, pady=5)
-	lab.pack(side=TOP)
-	variable2.set("1981")
-	w = OptionMenu(root, variable2, "1981", "1982", "1983", "1984", "1985", "1986", "1987", "1988", "1989","1990","1991","1992","1993","1994","1995","1996","1997","1998","1999","2000","2001","2002","2003","2004","2005","2006","2007","2008","2009","2010","2011","2012","2013","2014","2015","2016","2017","2018")
-	w.pack(side = TOP)
-	entries.append(("Min model year", variable2))
-
-	row = Frame(root)
 	lab = Label(row, width=15, text="Maximum model year", anchor='center')
 	variable3 = StringVar(root)
 	row.pack(side=TOP, fill=X, padx=5, pady=5)
 	lab.pack(side=TOP)
 	variable3.set("2018")
-	w = OptionMenu(root, variable3, "1981", "1982", "1983", "1984", "1985", "1986", "1987", "1988", "1989","1990","1991","1992","1993","1994","1995","1996","1997","1998","1999","2000","2001","2002","2003","2004","2005","2006","2007","2008","2009","2010","2011","2012","2013","2014","2015","2016","2017","2018")
+	w = OptionMenu(root, variable3, "2018", "2017","2016","2015","2014","2013","2012","2011","2010","2009","2008","2007","2006","2005","2004","2003","2002","2001","2000","1999","1998","1997","1996","1995","1994","1993","1992","1991","1990","1989","1988","1987","1986","1985","1984","1983","1982","1981")
 	w.pack(side = TOP)
 	entries.append(("Max model year", variable3))
+
+	row = Frame(root)
+	lab = Label(row, width=15, text="Minimum model year", anchor='center')
+	variable2 = StringVar(root)
+	row.pack(side=TOP, fill=X, padx=5, pady=5)
+	lab.pack(side=TOP)
+	variable2.set("1981")
+	w = OptionMenu(root, variable2, "2018", "2017","2016","2015","2014","2013","2012","2011","2010","2009","2008","2007","2006","2005","2004","2003","2002","2001","2000","1999","1998","1997","1996","1995","1994","1993","1992","1991","1990","1989","1988","1987","1986","1985","1984","1983","1982","1981")
+	w.pack(side = TOP)
+	entries.append(("Min model year", variable2))
 
 	return entries
 
