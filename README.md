@@ -13,10 +13,10 @@ Run elasticsearch/SearchGUI.py
 
 Query (optional field): Specify the search (brand, model, color, description - whatever you want)
 
-City (optional field): Enter a location/city that you want to filter the search on.
+City (optional field): Enter a location/city that you want to filter the search on
 
 Type: Select a specific motorcycle type or search amongst all types ("All")
 
-Maximum Model Year: Select how new motorcycles you want to include in the search result.
+Maximum Model Year: Select how new motorcycles you want to include in the search result
 
-Minimum Model Year: Select how old motorcycles you want to include in the search result.
+Minimum Model Year: Select how old motorcycles you want to include in the search result
