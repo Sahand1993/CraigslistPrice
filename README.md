@@ -4,12 +4,14 @@ A search engine for getting price statistics of motorcycles sold on Blocket
 
 HOW TO USE:
 
-1. START ELASTIC SEARCH
+1. Make sure you have "pillow" installed (pip install pillow) in order to use the Python GUI
 
-2. START THE USER INTERFACE:
+2. START ELASTIC SEARCH
+
+3. START THE USER INTERFACE:
 Run elasticsearch/SearchGUI.py
 
-3. WHAT TO ENTER IN THE SEARCH FIELDS:
+4. WHAT TO ENTER IN THE SEARCH FIELDS:
 
 Query (optional field): Specify the search (brand, model, color, description - whatever you want)
 
