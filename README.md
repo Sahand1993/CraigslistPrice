@@ -1,5 +1,5 @@
-# CraigslistPrice
-A search engine for getting price statistics of objects sold on Blocket
+# Price Recommendation Engine
+A search engine for getting price statistics of motorcycles sold on Blocket
 
 
 HOW TO USE:
