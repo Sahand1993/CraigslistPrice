@@ -60,19 +60,19 @@ def search(entries):
 	"""
 	# Handles VehicleType = All
 	if entries[2][1].get() == "All":
-		res = searcher.price(query=entries[0][1].get(), location=entries[1][1].get(),  min_model_year=entries[3][1].get(), max_model_year=entries[4][1].get())
-		returned_docs = searcher.similar(query=entries[0][1].get(), location=entries[1][1].get(),  min_model_year=entries[3][1].get(), max_model_year=entries[4][1].get())
+		res = searcher.price(query=entries[0][1].get(), location=entries[1][1].get(),  max_model_year=entries[3][1].get(), min_model_year=entries[4][1].get())
+		returned_docs = searcher.similar(query=entries[0][1].get(), location=entries[1][1].get(),  max_model_year=entries[3][1].get(), min_model_year=entries[4][1].get())
 		# Handles Location = All
 		if entries[1][1].get() == "All" or entries[1][1].get() == "":
-			res = searcher.price(query=entries[0][1].get(),  min_model_year=entries[3][1].get(), max_model_year=entries[4][1].get())
-			returned_docs = searcher.similar(query=entries[0][1].get(),  min_model_year=entries[3][1].get(), max_model_year=entries[4][1].get())
+			res = searcher.price(query=entries[0][1].get(),  max_model_year=entries[3][1].get(), min_model_year=entries[4][1].get())
+			returned_docs = searcher.similar(query=entries[0][1].get(),  max_model_year=entries[3][1].get(), min_model_year=entries[4][1].get())
 	# Handles Location = All 
 	elif entries[1][1].get() == "All" or entries[1][1].get() == "":
-		res = searcher.price(query=entries[0][1].get(), vehicle_type=entries[2][1].get(),  min_model_year=entries[3][1].get(), max_model_year=entries[4][1].get())
-		returned_docs = searcher.similar(query=entries[0][1].get(), vehicle_type=entries[2][1].get(),  min_model_year=entries[3][1].get(), max_model_year=entries[4][1].get())
+		res = searcher.price(query=entries[0][1].get(), vehicle_type=entries[2][1].get(),  max_model_year=entries[3][1].get(), min_model_year=entries[4][1].get())
+		returned_docs = searcher.similar(query=entries[0][1].get(), vehicle_type=entries[2][1].get(),  max_model_year=entries[3][1].get(), min_model_year=entries[4][1].get())
 	else:
-		res = searcher.price(query=entries[0][1].get(), location=entries[1][1].get(), vehicle_type=entries[2][1].get(),  min_model_year=entries[3][1].get(), max_model_year=entries[4][1].get())
-		returned_docs = searcher.similar(query=entries[0][1].get(), location=entries[1][1].get(), vehicle_type=entries[2][1].get(),  min_model_year=entries[3][1].get(), max_model_year=entries[4][1].get())
+		res = searcher.price(query=entries[0][1].get(), location=entries[1][1].get(), vehicle_type=entries[2][1].get(),  max_model_year=entries[3][1].get(), min_model_year=entries[4][1].get())
+		returned_docs = searcher.similar(query=entries[0][1].get(), location=entries[1][1].get(), vehicle_type=entries[2][1].get(),  max_model_year=entries[3][1].get(), min_model_year=entries[4][1].get())
 
 	
 
