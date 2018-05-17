@@ -1,7 +1,7 @@
 import json
 import statistics
 import sys
-sys.path.append('../elastic')
+sys.path.append('../elasticsearch')
 import searcher as my_searcher
 
 while True:
