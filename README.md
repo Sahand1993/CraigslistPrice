@@ -4,12 +4,16 @@ A search engine for getting price statistics of motorcycles sold on Blocket
 
 HOW TO USE:
 
-1. Make sure you have "pillow" installed (pip install pillow) in order to use the Python GUI
+1. Install pillow and elasticsearch modules for python.
+`pip install pillow`
+`pip install elasticsearch`
 
 2. Download and run Elasticsearch according to these instructions: https://www.elastic.co/downloads/elasticsearch 
 
+3. Install the elasticsearch python module: ``
+
 3. Start the program with :
-`python3 elasticsearch/SearchGUI.py`
+`python3 SearchGUI.py`
 
 4. What to enter in the fields:
 
