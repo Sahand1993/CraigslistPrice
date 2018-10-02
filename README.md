@@ -17,7 +17,7 @@ HOW TO USE:
 `python3 SearchGUI.py`
 
 4. What you can filter on in the fields:
-   - Query: Specify the search in free text (you can for example write brand, model, color, condition - whatever you want)
+   - Query: Specify the search in free text (e.g. brand, model, color, condition - whatever you want)
    - City: Enter a location/city that you want to filter the search on. THIS FIELD IS NOT RECOMMENDED TO USE SINCE SOME CITIES ARE DIVIDED INTO SMALLER REGIONS AND THE MAIN CITY DOES NOT GIVE ANY HITS. SHOULD BE REPLACED BY DROPDOWN.
    - Type: Select a specific motorcycle type or search amongst all types ("All")
    - Maximum Model Year: Select how new motorcycles you want to include in the search result
