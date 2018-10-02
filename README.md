@@ -6,8 +6,8 @@ This search engine takes a query and filtering arguments and performs a tf-idf b
 HOW TO USE:
 
 1. Install pillow and elasticsearch modules for python.
-`pip install pillow`
-`pip install elasticsearch`
+   `pip install pillow`
+   `pip install elasticsearch`
 
 2. Download and run Elasticsearch according to these instructions: https://www.elastic.co/downloads/elasticsearch 
 
