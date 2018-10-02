@@ -1,6 +1,7 @@
 # Price Recommendation Engine
 A search engine for getting price statistics of motorcycles sold on Blocket
 
+This search engine takes a query and filtering arguments and performs a tf-idf based search through a dataset of motorcycle ads. The ads that match the query best have their price average, maximum and minimum taken and presented to the user.
 
 HOW TO USE:
 
