@@ -11,8 +11,6 @@ HOW TO USE:
 
 2. Download and run Elasticsearch according to these instructions: https://www.elastic.co/downloads/elasticsearch 
 
-3. Install the elasticsearch python module: ``
-
 3. Start the program with :
 `python3 SearchGUI.py`
 
