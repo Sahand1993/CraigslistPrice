@@ -4,7 +4,7 @@ from statistics import mean, median
 from elasticsearch import Elasticsearch
 from elasticsearch.helpers import bulk
 
-PATH_TO_DATASET = "../dataset/motorcycles_python.json"
+PATH_TO_DATASET = "dataset/motorcycles_python.json"
 CUTOFF = 0.6    # Results with score less than 0.8 * max_score will not
                 # contribute to price estimate
 INDEX_NAME = "simple"
